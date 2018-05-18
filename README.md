@@ -3,6 +3,7 @@ Simple PHP Mysqli Class
 
 List of functions;
 
+```php
 /*
 Init construct
 
@@ -68,3 +69,5 @@ Select(
     Connect(        
     ); //no param
 */
+
+```
