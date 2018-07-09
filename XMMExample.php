@@ -110,5 +110,5 @@ Truncate(
 */
 
 $XMMysqliHelper->Truncate("users");
-
+ 
 ?> 
