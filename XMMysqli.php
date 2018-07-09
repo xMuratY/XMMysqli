@@ -196,6 +196,18 @@ Class XMMysqli{
 			return "XMMysqli::Delete() Error Occurpued!";
 		}
 	}
+	function Truncate($TableName)
+	{
+		$RequestStr = "TRUNCATE TABLE `$TableName`";
+		if ($this->MysqliObject->query($RequestStr) === TRUE)
+			return $this->XM_ERR_OK;		
+		else
+		{
+			if(!$this->ShowErrors)
+				return $this->XM_ERR;
+			return "XMMysqli::Truncate() Error Occurpued!";
+		}
+	}
 	function CleanStr($str)
 	{
 		return $this->MysqliObject->real_escape_string($str);
