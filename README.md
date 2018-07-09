@@ -70,4 +70,11 @@ Select(
     ); //no param
 */
 
+
+/*
+Truncate(
+	$TableName
+);
+*/
+
 ```
