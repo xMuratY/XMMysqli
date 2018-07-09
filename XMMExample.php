@@ -103,4 +103,12 @@ $XMMysqliHelper->Update("users", array("language" => "EN", "point" => 100000), a
 
 $XMMysqliHelper->Update("users", array("language" => "EN", "point" => 100000), array("id" => 10));
 
+/*
+Truncate(
+	$TableName
+);
+*/
+
+$XMMysqliHelper->Truncate("users");
+
 ?> 
