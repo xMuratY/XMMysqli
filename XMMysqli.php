@@ -213,5 +213,5 @@ Class XMMysqli{
 		return $this->MysqliObject->real_escape_string($str);
 	}
 }
-
+ 
 ?>
