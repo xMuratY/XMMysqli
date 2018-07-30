@@ -70,6 +70,15 @@ Select(
     ); //no param
 */
 
+/*
+    Disconnect(        
+    ); //no param
+*/
+
+/*
+    DestroySelf(
+    );
+*/
 
 /*
 Truncate(
