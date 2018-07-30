@@ -34,10 +34,32 @@ Class XMMysqli{
 				else						return $this->XM_ERR;
 			}
 		}
-    }
+	}
+	function __destruct()
+	{
+		$this->Disconnect();
+		
+		if($this->ShowErrors == true)
+			return "XMMysqli::DestroySelf() Called!";
+		return $this->XM_ERR_OK;
+	}
+	function DestroySelf()
+	{		
+		$this->Disconnect();
+		
+		if($this->ShowErrors == true)
+			return "XMMysqli::DestroySelf() Called!";
+		return $this->XM_ERR_OK;		
+	}
+	function Disconnect()
+	{		
+		if($this->MysqliObject->ping())
+			$this->MysqliObject->close();
+	}
 	function Connect(){
 		$mysqli = new mysqli($this->mysql_server, $this->mysql_username, $this->mysql_password, $this->mysql_datebase);
 		if ($mysqli->connect_errno) {
+			$mysqli->close();
 			if($this->ShowErrors == true)
 			{
 				echo "Error: Failed to make a MySQL connection, error: \n";
