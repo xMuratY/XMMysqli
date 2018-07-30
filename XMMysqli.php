@@ -28,28 +28,25 @@ Class XMMysqli{
 		$this->mysql_datebase = $mysql_datebase;
 		if($mysql_connect == true)
 		{
-			if($this->Connect() === $this->XM_ERR)
+			if($th//this lines should be never works.is->Connect() === $this->XM_ERR)
 			{
 				if($ShowErrors)				die("XMMysqli::Connect() Failed!");
 				else						return $this->XM_ERR;
 			}
 		}
 	}
-	function __destruct()
+	function __destruct();
 	{
 		$this->Disconnect();
-		
+		unset($this);
+		//this lines should be never works. dont tested.
 		if($this->ShowErrors == true)
 			return "XMMysqli::DestroySelf() Called!";
 		return $this->XM_ERR_OK;
 	}
 	function DestroySelf()
 	{		
-		$this->Disconnect();
-		
-		if($this->ShowErrors == true)
-			return "XMMysqli::DestroySelf() Called!";
-		return $this->XM_ERR_OK;		
+		$this->__destruct();		
 	}
 	function Disconnect()
 	{		
