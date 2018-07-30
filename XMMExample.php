@@ -110,5 +110,20 @@ Truncate(
 */
 
 $XMMysqliHelper->Truncate("users");
+
+/*
+    DestroySelf(
+    );	//no param
+*/
+
+$XMMysqliHelper->DestroySelf();
  
+
+/*
+    Disconnect(
+    );	//no param
+*/
+
+$XMMysqliHelper->Disconnect();
+
 ?> 
