@@ -28,7 +28,7 @@ Class XMMysqli{
 		$this->mysql_datebase = $mysql_datebase;
 		if($mysql_connect == true)
 		{
-			if($th//this lines should be never works.is->Connect() === $this->XM_ERR)
+			if($this->Connect() === $this->XM_ERR) //this lines should be never works.
 			{
 				if($ShowErrors)				die("XMMysqli::Connect() Failed!");
 				else						return $this->XM_ERR;
