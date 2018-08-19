@@ -16,11 +16,12 @@ XMMysqli(
 	$mysql_password,
 	$mysql_datebase,
 	$mysql_connect = true,
-	$ShowErrors = true
+	$ShowErrors = true,
+	$m_Charset = "utf8"
 );
 */
 
-$XMMysqliHelper = new XMMysqli($dbserver,$dbuser,$dbpass,$dbname, false, false);
+$XMMysqliHelper = new XMMysqli($dbserver,$dbuser,$dbpass,$dbname, false /*default:true*/, false /*default:true*/,"utf16" /*default:utf8*/);
 
 /*
     Connect(        
