@@ -13,7 +13,8 @@ XMMysqli(
 	$mysql_password,
 	$mysql_datebase,
 	$mysql_connect = true,
-	$ShowErrors = true
+	$ShowErrors = true,
+	$m_Charset = "utf8"
 );
 */
 
