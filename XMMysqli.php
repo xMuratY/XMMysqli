@@ -8,7 +8,9 @@ Class XMMysqli{
 	private $mysql_datebase = '';
 	private $XM_ERR_OK	= 1;
 	private $XM_ERR		= 0;
-
+	
+	private $m_Charset = '';
+	
 	private $IsInit = false;
 	private $IsConnected = false;	
 	
@@ -20,12 +22,14 @@ Class XMMysqli{
 	$mysql_password,
 	$mysql_datebase,
 	$mysql_connect = true,
-	$ShowErrors = true) {
+	$ShowErrors = true,
+	$m_Charset = "utf8") {
 		$this->ShowErrors = $ShowErrors;
 		$this->mysql_server = $mysql_server;
 		$this->mysql_username = $mysql_username;
 		$this->mysql_password = $mysql_password;
 		$this->mysql_datebase = $mysql_datebase;
+		$this->m_Charset = $m_Charset;
 		if($mysql_connect == true)
 		{
 			if($this->Connect() === $this->XM_ERR) //this lines should be never works.
@@ -69,7 +73,7 @@ Class XMMysqli{
 			}
 		}else
 		{			
-			$mysqli->set_charset("utf8"); //optional
+			$mysqli->set_charset($this->m_Charset);
 			$this->MysqliObject = $mysqli;
 			return $this->XM_ERR_OK;
 		}
