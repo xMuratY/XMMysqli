@@ -86,5 +86,4 @@ Truncate(
 	$TableName
 );
 */
-
 ```
