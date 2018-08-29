@@ -39,7 +39,7 @@ Class XMMysqli{
 			}
 		}
 	}
-	function __destruct();
+	function __destruct()
 	{
 		$this->Disconnect();
 		unset($this);
