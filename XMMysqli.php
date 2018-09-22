@@ -73,7 +73,7 @@ Class XMMysqli{
 			}
 		}else
 		{			
-			$mysqli->set_charset($this->m_Charset);
+			@$mysqli->set_charset($this->m_Charset);
 			$this->MysqliObject = $mysqli;
 			return $this->XM_ERR_OK;
 		}
