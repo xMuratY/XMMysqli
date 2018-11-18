@@ -5,7 +5,7 @@ Class XMMysqli{
 	private $mysql_server   = '';
 	private $mysql_username = '';
 	private $mysql_password = '';
-	private $mysql_datebase = '';
+	private $mysql_database = '';
 	private $XM_ERR_OK	= 1;
 	private $XM_ERR		= 0;
 	
@@ -20,7 +20,7 @@ Class XMMysqli{
 	$mysql_server,
 	$mysql_username,
 	$mysql_password,
-	$mysql_datebase,
+	$mysql_database,
 	$mysql_connect = true,
 	$ShowErrors = true,
 	$m_Charset = "utf8") {
@@ -28,7 +28,7 @@ Class XMMysqli{
 		$this->mysql_server = $mysql_server;
 		$this->mysql_username = $mysql_username;
 		$this->mysql_password = $mysql_password;
-		$this->mysql_datebase = $mysql_datebase;
+		$this->mysql_database = $mysql_database;
 		$this->m_Charset = $m_Charset;
 		if($mysql_connect == true)
 		{
@@ -58,7 +58,7 @@ Class XMMysqli{
 			$this->MysqliObject->close();
 	}
 	function Connect(){
-		$mysqli = new mysqli($this->mysql_server, $this->mysql_username, $this->mysql_password, $this->mysql_datebase);
+		$mysqli = new mysqli($this->mysql_server, $this->mysql_username, $this->mysql_password, $this->mysql_database);
 		if ($mysqli->connect_errno) {
 			$mysqli->close();
 			if($this->ShowErrors == true)
