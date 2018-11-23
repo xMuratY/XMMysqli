@@ -1,11 +1,8 @@
 # XMMysqli
 Simple PHP Mysqli Class
 
-*****************************************************************************************
-#	Required for Mysql 8.0+ :
 
-mysql --default-auth=mysql_native_password		#
-*****************************************************************************************
+# Doesn't supports Mysql 8.0+
 
 
 List of functions;
