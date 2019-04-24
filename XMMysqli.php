@@ -75,25 +75,18 @@ Class XMMysqli{
 			$this->MysqliObject = $mysqli;
 			return $this->XM_ERR_OK;
 		}
-    }	
-    function ManualQuery($query)
-    {
-		$result = $this->MysqliObject->query($query);
-		if ($result->num_rows > 0)
-		{
-			$XMArray = array();
-			while($row = $result->fetch_assoc()) {
-				array_push($XMArray,$row);
-			}
-			return $XMArray;
-		}
+  }	
+  function ManualQuery($query)
+  {
+		if ($this->MysqliObject->query($query) === TRUE)
+			return $this->XM_ERR_OK;
 		else
 		{
 			if(!$this->ShowErrors)
 				return $this->XM_ERR;
 			return "XMMysqli::ManualQuery() Error Occurpued!";
 		}
-    }
+  }
 	function Update($TableName, $RequestArray, $Where){
 		$RequestStr = "UPDATE $TableName SET ";
 		$countx = count($RequestArray);
