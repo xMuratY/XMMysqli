@@ -22,7 +22,7 @@ Class XMMysqli{
 	$mysql_password,
 	$mysql_database,
 	$mysql_connect = true,
-	$ShowErrors = true,
+	$ShowErrors = false,
 	$m_Charset = "utf8") {
 		$this->ShowErrors = $ShowErrors;
 		$this->mysql_server = $mysql_server;
@@ -32,7 +32,7 @@ Class XMMysqli{
 		$this->m_Charset = $m_Charset;
 		if($mysql_connect == true)
 		{
-			if($this->Connect() === $this->XM_ERR) //this lines should be never works.
+			if($this->Connect() === $this->XM_ERR)
 			{
 				if($ShowErrors)				die("XMMysqli::Connect() Failed!");
 				else						return $this->XM_ERR;
@@ -42,8 +42,6 @@ Class XMMysqli{
 	function __destruct()
 	{
 		$this->Disconnect();
-		unset($this);
-		//this lines should be never works. dont tested.
 		if($this->ShowErrors == true)
 			return "XMMysqli::DestroySelf() Called!";
 		return $this->XM_ERR_OK;
@@ -77,8 +75,26 @@ Class XMMysqli{
 			$this->MysqliObject = $mysqli;
 			return $this->XM_ERR_OK;
 		}
-	}	
-	function Update($TableName, $RequestArray, $Where, $whereByID = true){
+    }	
+    function ManualQuery($query)
+    {
+		$result = $this->MysqliObject->query($query);
+		if ($result->num_rows > 0)
+		{
+			$XMArray = array();
+			while($row = $result->fetch_assoc()) {
+				array_push($XMArray,$row);
+			}
+			return $XMArray;
+		}
+		else
+		{
+			if(!$this->ShowErrors)
+				return $this->XM_ERR;
+			return "XMMysqli::ManualQuery() Error Occurpued!";
+		}
+    }
+	function Update($TableName, $RequestArray, $Where){
 		$RequestStr = "UPDATE $TableName SET ";
 		$countx = count($RequestArray);
 		$ccount = 1;
@@ -93,7 +109,7 @@ Class XMMysqli{
 		{
 			$cKey = key($Where);
 			$cVal = $Where[$cKey];
-			if($whereByID)
+			if(!is_string($cVal))
 				$RequestStr .= " WHERE $cKey=$cVal";
 			else				
 				$RequestStr .= " WHERE $cKey='$cVal'";
@@ -124,7 +140,7 @@ Class XMMysqli{
 		$RequestStr .= ") VALUES (";
 		$ccount = 1;
 		foreach ($ReqValArr as $cVal)
-		{			
+		{	
 			$RequestStr .= "'$cVal'";
 			if($countval != $ccount)
 				$RequestStr .= ",";
@@ -140,14 +156,14 @@ Class XMMysqli{
 			return "XMMysqli::Insert() Error Occurpued!";
 		}
 	}
-	function Select($TableName, $Selection = "*", $Where = null, $whereByID = true, $bIsAssoc = true)
+	function Select($TableName, $Selection = "*", $Where = null, $bIsAssoc = true)
 	{
 		$RequestStr = "SELECT $Selection FROM $TableName";
 		if($Where != null)
 		{
 			$cKey = key($Where);
 			$cVal = $Where[$cKey];
-			if($whereByID)
+			if(!is_string($cVal))
 				$RequestStr .= " WHERE $cKey=$cVal";
 			else
 				$RequestStr .= " WHERE $cKey='$cVal'";
@@ -165,15 +181,34 @@ Class XMMysqli{
 			return "XMMysqli::Select() No Results!";
 		}
 	}
-	function MultiSelect($TableName, $Selection = "*", $Where = null, $whereByID = true, $bIsAssoc = true)
+	function MultiSelectManualQuery($TableName, $Selection, $Where)
+	{
+		$RequestStr = "SELECT $Selection FROM $TableName WHERE $Where";
+		$result = $this->MysqliObject->query($RequestStr);
+		if ($result->num_rows > 0)
+		{
+			$XMArray = array();
+			while($row = $result->fetch_assoc()) {
+				array_push($XMArray,$row);
+			}
+			return $XMArray;
+		}
+		else
+		{
+			if(!$this->ShowErrors)
+				return $this->XM_ERR;
+			return "XMMysqli::MultiSelect() No Results!";
+		}
+	}
+	function MultiSelect($TableName, $Selection = "*", $Where = null, $bIsAssoc = true)
 	{
 		$RequestStr = "SELECT $Selection FROM $TableName";
 		if($Where != null)
 		{
 			$cKey = key($Where);
 			$cVal = $Where[$cKey];
-			if($whereByID)
-				$RequestStr .= " WHERE $cKey=$cVal";
+            if(!is_string($cVal))
+			    $RequestStr .= " WHERE $cKey=$cVal";
 			else
 				$RequestStr .= " WHERE $cKey='$cVal'";
 		}
@@ -201,13 +236,13 @@ Class XMMysqli{
 			return "XMMysqli::MultiSelect() No Results!";
 		}
 	}
-	function Delete($TableName, $Where, $whereByID = true)
+	function Delete($TableName, $Where)
 	{
 		$cKey = key($Where);
 		$cVal = $Where[$cKey];
 		$RequestStr = "";
-		if($whereByID)
-			$RequestStr .= "DELETE FROM $TableName WHERE $cKey=$cVal";
+		if(!is_string($cVal))
+            $RequestStr .= "DELETE FROM $TableName WHERE $cKey=$cVal";
 		else
 			$RequestStr .= "DELETE FROM $TableName WHERE $cKey='$cVal'";
 		if ($this->MysqliObject->query($RequestStr) === TRUE)
